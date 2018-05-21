@@ -27,19 +27,18 @@ public class WebService extends AsyncTask<ParamRelays, Void, Boolean> {
 
             //Renseignement des valeurs des paramètres
             try {
-                Request.addProperty("v1", Integer.toString(paramRelays[0].relays));
-                Request.addProperty("v2", paramRelays[0].action);
+                Request.addProperty("v1", paramRelays[0].action);
+                Request.addProperty("v2", Integer.toString(paramRelays[0].relays));
             } catch (Exception e) {
                 Log.e("VerrouActivity", e.getMessage());
             }
 
             //Création de l'enveloppe
-            SoapSerializationEnvelope enveloppe = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            //SoapSerializationEnvelope enveloppe = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        SoapSerializationEnvelope enveloppe = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 
-        enveloppe.dotNet = true;
-        enveloppe.setAddAdornments(false);
-
-
+            enveloppe.dotNet = true;
+            enveloppe.setAddAdornments(false);
 
 
             //Ajout de la requête dans l'enveloppe
@@ -50,8 +49,9 @@ public class WebService extends AsyncTask<ParamRelays, Void, Boolean> {
             try {
                 http_transport.call(NAMESPACE + METHODNAME, enveloppe);
                 SoapPrimitive reponse = (SoapPrimitive) enveloppe.getResponse();
+
                 //resultat_float = Float.parseFloat(reponse.toString());
-                //Retourner le résultat du calcul
+                
                 return true;
             } catch (Exception e) {
                 this.exception = e;
