@@ -13,15 +13,15 @@ public class VerrouActivity extends AppCompatActivity {
     }
 
     public void onClickPortailExterieur(View v){
-        new WebService().execute(new ParamRelays("IMP",1));
+        new ServiceClient().execute(new ParamRelays("IMP",8));
 
     }
 
     public void onClickPortailMiev(View v){
-        new WebService().execute(new ParamRelays("IMP",1));
+        new ServiceClient().execute(new ParamRelays("IMP",6));
     }
 
     public void onClickPortailIonic(View v){
-        new WebService().execute(new ParamRelays("IMP",1));
+        new ServiceClient().execute(new ParamRelays("IMP",7));
     }
 }
