@@ -4,12 +4,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.nio.charset.Charset;
+
 public class VerrouActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verrou);
+
+        //https://stackoverflow.com/questions/45406996/how-to-encrypt-string-in-java-and-decrypt-in-python
+        String plaintext = "Hello World!";
+        System.out.println("Plain text: " + plaintext);
+        //String ciphertext = new Encryption().encrypt(plaintext.getBytes("UTF-8"));
+        String ciphertext = new Encryption().encrypt(plaintext.getBytes());
+        System.out.println("Encrypted text: " + ciphertext);
     }
 
     public void onClickPortailExterieur(View v){
