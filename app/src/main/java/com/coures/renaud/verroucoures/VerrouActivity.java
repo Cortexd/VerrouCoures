@@ -24,17 +24,38 @@ public class VerrouActivity extends AppCompatActivity {
         //String ciphertext = new Encryption().encrypt(plaintext.getBytes());
         //System.out.println("Encrypted text: " + ciphertext);
 
-        Button  button = (Button) findViewById(R.id.buttonExterieurLong);
+        Button  button = (Button) findViewById(R.id.buttonExterieur);
         button.setOnLongClickListener(new View.OnLongClickListener()
         {
             public boolean onLongClick(View arg0) {
-                Toast.makeText(getApplicationContext(), "Long Clicked " ,    Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Portail exterieur" ,    Toast.LENGTH_SHORT).show();
+                new ServiceClient().execute(new ParamRelays("IMP",8));
+                return true;    // <- set to true
+            }
+        });
+
+        button = (Button) findViewById(R.id.buttonIonic);
+        button.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            public boolean onLongClick(View arg0) {
+                Toast.makeText(getApplicationContext(), "Portail IONIC" ,    Toast.LENGTH_SHORT).show();
+                new ServiceClient().execute(new ParamRelays("IMP",7));
+                return true;    // <- set to true
+            }
+        });
+
+        button = (Button) findViewById(R.id.buttonMiev);
+        button.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            public boolean onLongClick(View arg0) {
+                Toast.makeText(getApplicationContext(), "Portail MIEV" ,    Toast.LENGTH_SHORT).show();
+                new ServiceClient().execute(new ParamRelays("IMP",6));
                 return true;    // <- set to true
             }
         });
     }
 
-    public void onClickPortailExterieur(View v){
+   /* public void onClickPortailExterieur(View v){
         new ServiceClient().execute(new ParamRelays("IMP",8));
 
     }
@@ -45,13 +66,12 @@ public class VerrouActivity extends AppCompatActivity {
 
     public void onClickPortailIonic(View v){
         new ServiceClient().execute(new ParamRelays("IMP",7));
-    }
+    }*/
 
     public void onClickGetEtatPortails(View v){
 
         TextView tvEtatPortail = (TextView) findViewById(R.id.textViewEtatPortails);
-
-        tvEtatPortail.setText("MIEV : Ouvert\n IONIC : Fermé\n Exterieur : Fermé");
+        tvEtatPortail.setText("MIEV : Ouvert ?\nIONIC : Fermé ?\nExterieur : Fermé ?");
 
     }
 }
