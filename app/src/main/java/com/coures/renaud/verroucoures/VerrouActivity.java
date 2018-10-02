@@ -24,11 +24,18 @@ public class VerrouActivity extends AppCompatActivity {
         //String ciphertext = new Encryption().encrypt(plaintext.getBytes());
         //System.out.println("Encrypted text: " + ciphertext);
 
+         this.attacheEvenementPortailBouton();
+    }
+
+    private void attacheEvenementPortailBouton() {
+
         Button  button = (Button) findViewById(R.id.buttonExterieur);
         button.setOnLongClickListener(new View.OnLongClickListener()
         {
             public boolean onLongClick(View arg0) {
+                // Message
                 Toast.makeText(getApplicationContext(), "Portail exterieur" ,    Toast.LENGTH_SHORT).show();
+                // Appel web service
                 new ServiceClient().execute(new ParamRelays("IMP",8));
                 return true;    // <- set to true
             }
@@ -55,23 +62,14 @@ public class VerrouActivity extends AppCompatActivity {
         });
     }
 
-   /* public void onClickPortailExterieur(View v){
-        new ServiceClient().execute(new ParamRelays("IMP",8));
-
-    }
-
-    public void onClickPortailMiev(View v){
-        new ServiceClient().execute(new ParamRelays("IMP",6));
-    }
-
-    public void onClickPortailIonic(View v){
-        new ServiceClient().execute(new ParamRelays("IMP",7));
-    }*/
-
     public void onClickGetEtatPortails(View v){
 
         TextView tvEtatPortail = (TextView) findViewById(R.id.textViewEtatPortails);
-        tvEtatPortail.setText("MIEV : Ouvert ?\nIONIC : Fermé ?\nExterieur : Fermé ?");
+        //tvEtatPortail.setText("MIEV : Ouvert ?\nIONIC : Fermé ?\nExterieur : Fermé ?");
+
+        //new ServiceClient().execute(new ParamRelays("IMP",6));
+
+        //tvEtatPortail.setText(
 
     }
 }
