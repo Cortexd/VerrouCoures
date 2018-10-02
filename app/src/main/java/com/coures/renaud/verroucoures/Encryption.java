@@ -19,43 +19,21 @@ import javax.crypto.spec.SecretKeySpec;
 
 
         private static int KEY_SIZE = 16;
-        private static String ENCRYPTION_KEY = "9061979aaronaxel";
+        private static String ENCRYPTION_KEY = "9061979AaronAxel";
 
 
-        /**
-         * Encrypt using AES 128-bit encryption with CBC mode
-         *
-         * @param plaintext (byte[]) The plain text
-         *
-         * @return (String) Encrypted text
-         */
-        public String encrypt(byte[] plaintext) {
-            try {
+       public String simpleMD5Encrypt(String message) throws NoSuchAlgorithmException {
 
-                String passphrase = (ENCRYPTION_KEY.length() > KEY_SIZE) ? ENCRYPTION_KEY.substring(0, KEY_SIZE) : ENCRYPTION_KEY;
-                byte[] key = passphrase.getBytes("UTF-8");
-                byte[] iv = generateInitializationVector(KEY_SIZE);
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            byte[] crypted =  digest.digest((message + ENCRYPTION_KEY).getBytes());
 
-                SecretKeySpec secretKeySpec;
-                secretKeySpec = new SecretKeySpec(key, "AES");
+            // retour en hexa string
+           StringBuilder sb = new StringBuilder();
+           for (byte b : crypted) {
+               sb.append(String.format("%02X", b));
+           }
+          return sb.toString();
 
-
-
-                // PKCS#5 Padding
-                Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-                AlgorithmParameters algorithmParams = AlgorithmParameters.getInstance("AES");
-                algorithmParams.init(new IvParameterSpec(iv));
-                cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, algorithmParams);
-                byte[] encryptedBytes = cipher.doFinal(plaintext);
-                return encodeBase64URLSafeString(encryptedBytes);
-            } catch (NoSuchPaddingException | BadPaddingException e) {
-                System.out.println("Padding exception in encrypt(): " + e);
-            } catch ( NoSuchAlgorithmException | InvalidKeyException	| IllegalBlockSizeException e ) {
-                System.out.println("Validation exception in encrypt(): " + e);
-            } catch (Exception e) {
-                System.out.println("Exception in encrypt(): " + e);
-            }
-            return null;
         }
 
 

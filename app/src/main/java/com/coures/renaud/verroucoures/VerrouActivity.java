@@ -7,7 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.nio.charset.Charset;
+import java.security.NoSuchAlgorithmException;
+
 
 public class VerrouActivity extends AppCompatActivity {
 
@@ -18,11 +19,16 @@ public class VerrouActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verrou);
 
         //https://stackoverflow.com/questions/45406996/how-to-encrypt-string-in-java-and-decrypt-in-python
-        //String plaintext = "Hello World!";
-        //System.out.println("Plain text: " + plaintext);
-        //String ciphertext = new Encryption().encrypt(plaintext.getBytes("UTF-8"));
-        //String ciphertext = new Encryption().encrypt(plaintext.getBytes());
-        //System.out.println("Encrypted text: " + ciphertext);
+        String plaintext = "Y2018-M07-D26 H10:M10";
+        System.out.println("Plain text: " + plaintext+ "|");
+        System.out.println("Plain text plaintext.getBytes(): " + plaintext.getBytes() + "|");
+        String ciphertext = "";
+        try {
+            ciphertext = new Encryption().simpleMD5Encrypt(plaintext);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Encrypted text: " + ciphertext);
 
          this.attacheEvenementPortailBouton();
     }
