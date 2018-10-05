@@ -13,6 +13,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class VerrouActivity extends AppCompatActivity implements MyTaskInformer {
 
+    final MyTaskInformer callback = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -23,7 +25,8 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer 
         this.attacheEvenementPortailBouton();
         this.attacheEvenementGetEtatPortailsBouton();
 
-        new ServiceClientGetEtatPortail(this).execute();
+
+        //new ServiceClientGetEtatPortail(this).execute();
 
     }
 
@@ -34,7 +37,6 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer 
         button.setOnLongClickListener(new View.OnLongClickListener()
         {
             public boolean onLongClick(View arg0) {
-                // Message
                 Toast.makeText(getApplicationContext(), "Portail exterieur" ,    Toast.LENGTH_SHORT).show();
                 // Appel web service
                 new ServiceClientRelais().execute(new ParamRelays("IMP",8));
@@ -71,11 +73,7 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer 
             public boolean onLongClick(View arg0) {
 
                 Toast.makeText(getApplicationContext(), "Recup état" ,    Toast.LENGTH_SHORT).show();
-
-                //new ServiceClientGetEtatPortail(this).execute();
-
-
-
+                new ServiceClientGetEtatPortail(callback).execute();
                 return true;    // <- set to true
             }
         });
@@ -86,7 +84,6 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer 
     public void onTaskDone(String output) {
 
         TextView tvEtatPortail = (TextView) findViewById(R.id.textViewEtatPortails);
-
         tvEtatPortail.setText(output);
     }
 
