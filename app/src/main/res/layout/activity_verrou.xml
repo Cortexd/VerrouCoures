@@ -5,68 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VerrouActivity"
-    tools:layout_editor_absoluteY="81dp">
+    android:id="@+id/relativeLayout">
 
     <Button
         android:id="@+id/buttonExterieur"
         android:layout_width="138dp"
         android:layout_height="73dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Exterieur"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonMiev" />
 
     <Button
         android:id="@+id/buttonMiev"
-        android:layout_width="138dp"
-        android:layout_height="73dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="139dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="38dp"
         android:text="Miev"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonExterieur" />
+        app:layout_constraintBottom_toBottomOf="@+id/buttonIonic" />
 
     <Button
         android:id="@+id/buttonIonic"
         android:layout_width="138dp"
         android:layout_height="73dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginTop="111dp"
         android:text="Ionic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMiev" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/buttonEtatPortail"
         android:layout_width="138dp"
         android:layout_height="73dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="onClickGetEtatPortails"
+        android:layout_marginTop="200dp"
         android:text="Etat portails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonIonic" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonExterieur" />
 
     <TextView
         android:id="@+id/textViewEtatPortails"
-        android:layout_width="170dp"
-        android:layout_height="130dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="326dp"
+        android:layout_height="215dp"
+        android:layout_marginBottom="13dp"
         android:text="Etats portails : "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEtatPortail" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
