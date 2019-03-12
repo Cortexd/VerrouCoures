@@ -134,7 +134,7 @@ public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String> {
             Element rootElement = xmlRetour.getDocumentElement();
             String retour = getString("Result", rootElement);
 
-
+            retour = retour.replace("Portail2", "\r\n" +"Portail2" );
             // Call activity method with results
             //TextView tvEtatPortail = (TextView) rootView.findViewById(R.id.textViewEtatPortails);
             //TextView tvEtatPortail = ((Activity) mContext).findViewById(R.id.textViewEtatPortails);
