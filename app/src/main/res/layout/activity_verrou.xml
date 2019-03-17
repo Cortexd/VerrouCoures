@@ -9,12 +9,12 @@
 
     <Button
         android:id="@+id/buttonExterieur"
-        android:layout_width="138dp"
-        android:layout_height="73dp"
+        android:layout_width="318dp"
+        android:layout_height="77dp"
         android:layout_marginTop="16dp"
         android:text="Exterieur"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/buttonMiev" />
+        app:layout_constraintStart_toStartOf="@+id/buttonMiev"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonMiev"
@@ -43,6 +43,19 @@
         android:text="Etat portails"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@+id/buttonExterieur" />
+
+    <Button
+        android:id="@+id/buttonTEST"
+        android:layout_width="102dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="72dp"
+        android:onClick="myClickHandlerTEST"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonEtatPortail"
+        tools:layout_editor_absoluteY="210dp" />
 
     <TextView
         android:id="@+id/textViewEtatPortails"

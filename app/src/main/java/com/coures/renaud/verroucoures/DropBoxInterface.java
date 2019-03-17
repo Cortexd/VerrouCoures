@@ -1,4 +1,12 @@
-/*package com.coures.renaud.verroucoures;
+package com.coures.renaud.verroucoures;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -11,39 +19,59 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
-public class DropBoxInterface {
+public class DropBoxInterface extends AsyncTask<Void, Void, String> {
 
-    private final String ACCESS_TOKEN = "<ACCESS TOKEN>";
+    private static String ACCESS_TOKEN = 
 
-    public void GetIp(String args[]) throws DbxException {
-        // Create Dropbox client
-        DbxRequestConfig config = new DbxRequestConfig("dropbox/java-tutorial", "en_US");
-        DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
+    TextView tvEtatPortail;
 
-        // Get current account info
-        FullAccount account = client.users().getCurrentAccount();
-        System.out.println(account.getName().getDisplayName());
+    private Context mContext;
+    private View rootView;
 
-        // Get files and folder metadata from Dropbox root directory
-        ListFolderResult result = client.files().listFolder("");
-        while (true) {
-            for (Metadata metadata : result.getEntries()) {
-                System.out.println(metadata.getPathLower());
-            }
+    public DropBoxInterface(Context context){
+        this.mContext=context;
 
-            if (!result.getHasMore()) {
-                break;
-            }
-
-            result = client.files().listFolderContinue(result.getCursor());
-        }
-
-        // Upload "test.txt" to Dropbox
-        try (InputStream in = new FileInputStream("test.txt")) {
-            FileMetadata metadata = client.files().uploadBuilder("/test.txt")
-                    .uploadAndFinish(in);
-        }
     }
+
+    @Override
+    protected void onPreExecute(){
+        super.onPreExecute();
+        tvEtatPortail = (TextView) mContext.findViewById(R.id.textViewEtatPortails);
+
+    }
+        @Override
+    protected String doInBackground(Void... v)
+    {
+
+        try
+        {
+            // Create Dropbox client
+            DbxRequestConfig config = new DbxRequestConfig("dropbox/java-tutorial", "en_US");
+            DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
+
+            // Get current account info
+            FullAccount account = client.users().getCurrentAccount();
+            System.out.println(account.getName().getDisplayName());
+
+            // Get files and folder metadata from Dropbox root directory
+            //ListFolderResult result = client.files().listFolder("/Application/VerrouCoures/");
+
+            client.files().download("/Application/VerrouCoures/ip.txt");
+        }
+        catch (Exception ex)
+        {
+            return "";
+        }
+
+      return "test";
+    }
+
+    @Override
+    protected void onPostExecute(String  result) {
+
+               tvEtatPortail.setText("ip " + result);
+    }
+
 }
-*/
+
 

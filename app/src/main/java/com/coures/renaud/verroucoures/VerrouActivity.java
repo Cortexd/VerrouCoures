@@ -28,8 +28,24 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer 
 
         //new ServiceClientGetEtatPortail(this).execute();
 
+
     }
 
+    public void myClickHandlerTEST(View target) {
+
+        try
+        {
+            //TextView tvEtatPortail = (TextView) findViewById(R.id.textViewEtatPortails);
+            new DropBoxInterface(this, R.layout.activity_verrou).execute();
+            //tvEtatPortail.setText(ip);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+    }
 
     private void attacheEvenementPortailBouton() {
 
