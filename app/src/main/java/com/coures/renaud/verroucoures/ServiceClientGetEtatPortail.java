@@ -103,8 +103,6 @@ public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String> {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "text/xml;charset=utf-8");
             connection.setRequestProperty("Content-Length", String.valueOf(content.length()));
-            //connection.setRequestProperty("Accept-Encoding", "gzip"); // comment this line out if you dont want to compress all service calls
-            //connection.setRequestProperty("SOAPAction", soapAction + Params[0]);
             connection.setRequestProperty("SOAPAction", soapAction);
 
             // Get soap response
@@ -125,21 +123,13 @@ public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String> {
                 throw new Exception("HTTP ERROR: " + responseCode);
             }
 
-            // Extract data
-//                int index = response.indexOf("<Result xsi:type=\"xsd:string\">");
-//                int index2 = response.indexOf(" </Result>", index + 10);
-//                retour = response.substring(index + 7, index2);
 
             Document xmlRetour = convertStringToDocument(response);
             Element rootElement = xmlRetour.getDocumentElement();
             String retour = getString("Result", rootElement);
 
             retour = retour.replace("Portail2", "\r\n" +"Portail2" );
-            // Call activity method with results
-            //TextView tvEtatPortail = (TextView) rootView.findViewById(R.id.textViewEtatPortails);
-            //TextView tvEtatPortail = ((Activity) mContext).findViewById(R.id.textViewEtatPortails);
-            //tvEtatPortail.setText(retour);
-
+          
             // release all resources
             br.close();
             connection.disconnect();

@@ -9,62 +9,99 @@
 
     <Button
         android:id="@+id/buttonExterieur"
-        android:layout_width="318dp"
-        android:layout_height="77dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="355dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="32dp"
         android:text="Exterieur"
-        app:layout_constraintStart_toStartOf="@+id/buttonMiev"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonMiev"
-        android:layout_width="139dp"
+        android:layout_width="138dp"
         android:layout_height="72dp"
-        android:layout_marginStart="38dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
         android:text="Miev"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonIonic" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonExterieur" />
 
     <Button
         android:id="@+id/buttonIonic"
-        android:layout_width="138dp"
-        android:layout_height="73dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginTop="111dp"
+        android:layout_width="148dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="8dp"
         android:text="Ionic"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonMiev"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonMiev" />
 
     <Button
         android:id="@+id/buttonEtatPortail"
         android:layout_width="138dp"
         android:layout_height="73dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
         android:text="Etat portails"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/buttonExterieur" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonMiev" />
 
     <Button
         android:id="@+id/buttonTEST"
-        android:layout_width="102dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="72dp"
+        android:layout_width="143dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="8dp"
         android:onClick="myClickHandlerTEST"
-        android:text="Button"
+        android:text="TEST"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonEtatPortail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonEtatPortail"
-        tools:layout_editor_absoluteY="210dp" />
+        app:layout_constraintStart_toEndOf="@+id/buttonEtatPortail" />
 
     <TextView
         android:id="@+id/textViewEtatPortails"
-        android:layout_width="326dp"
-        android:layout_height="215dp"
+        android:layout_width="340dp"
+        android:layout_height="122dp"
         android:layout_marginBottom="13dp"
+        android:background="@color/colorGray"
+        android:fontFamily="monospace"
         android:text="Etats portails : "
+        android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <WebView
+        android:id="@+id/webViewImage"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorGray"
+        app:layout_constraintBottom_toTopOf="@+id/textViewEtatPortails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEtatPortail"
+        app:layout_constraintVertical_bias="0.968" />
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="332dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="false"
+        android:text="Wifi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTEST" />
 
 </android.support.constraint.ConstraintLayout>
