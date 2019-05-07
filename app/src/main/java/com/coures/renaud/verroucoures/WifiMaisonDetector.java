@@ -26,8 +26,7 @@ public  class WifiMaisonDetector
     
     public void IsMaisonConnected()
     {
-    
-      
+        
         String ssid = null;
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -39,7 +38,7 @@ public  class WifiMaisonDetector
                 ssid = connectionInfo.getSSID();
             }
         }
-        radioWifi.isChecked();
+        radioWifi.setChecked(true);
     }
     
 }

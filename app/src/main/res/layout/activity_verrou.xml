@@ -20,7 +20,7 @@
     <Button
         android:id="@+id/buttonMiev"
         android:layout_width="138dp"
-        android:layout_height="72dp"
+        android:layout_height="73dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="32dp"
         android:text="Miev"
@@ -29,8 +29,8 @@
 
     <Button
         android:id="@+id/buttonIonic"
-        android:layout_width="148dp"
-        android:layout_height="71dp"
+        android:layout_width="138dp"
+        android:layout_height="73dp"
         android:layout_marginStart="68dp"
         android:layout_marginEnd="8dp"
         android:text="Ionic"
@@ -51,8 +51,8 @@
 
     <Button
         android:id="@+id/buttonTEST"
-        android:layout_width="143dp"
-        android:layout_height="66dp"
+        android:layout_width="168dp"
+        android:layout_height="73dp"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="8dp"
         android:onClick="myClickHandlerTEST"
@@ -76,8 +76,8 @@
 
     <WebView
         android:id="@+id/webViewImage"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
+        android:layout_width="223dp"
+        android:layout_height="193dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -92,15 +92,15 @@
 
     <RadioButton
         android:id="@+id/radioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="133dp"
+        android:layout_height="30dp"
         android:layout_marginStart="332dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:clickable="false"
-        android:text="Wifi"
+        android:text="Wifi détecté"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTEST" />
 

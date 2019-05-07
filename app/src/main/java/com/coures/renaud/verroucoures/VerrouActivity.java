@@ -46,10 +46,9 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
         {
             TextView tvEtatPortail = findViewById(R.id.textViewEtatPortails);
             
-            boolean wifi = WifiMaisonDetector(getApplicationContext()).IsMaisonConnected();
+            new WifiMaisonDetector(this, getApplicationContext()).IsMaisonConnected();
     
-            tvEtatPortail.setText("SSID " + wifi);
-           
+            
             tvEtatPortail.setText("Get IP");
             
             checkPermissionsAndGetIp();
