@@ -95,6 +95,8 @@ public class DropBoxInterface extends AsyncTask<Void, Void, String>
                 catch (IOException e) {
                     //You'll need to add proper error handling here
                 }
+                ApplicationConfig conf = ApplicationConfig.getConfig();
+                conf.setUrlWebServiceInternet(text.toString());
                 return text.toString();
             }
             

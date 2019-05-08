@@ -179,6 +179,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("SSID_Maison"));
             bindPreferenceSummaryToValue(findPreference("IP_Locale_Banane"));
+            bindPreferenceSummaryToValue(findPreference("Port_Banane"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
         }
 

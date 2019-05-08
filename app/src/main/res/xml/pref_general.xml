@@ -19,7 +19,16 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="Ip Banane" />
+        android:title="Ip local Banane" />
+    <EditTextPreference
+        android:capitalize="none"
+        android:defaultValue="18099"
+        android:inputType="none"
+        android:key="Port_Banane"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Port Banane" />
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->

@@ -1,6 +1,8 @@
 package com.coures.renaud.verroucoures;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 // Classe qui permet de passer des paramétres surtout lors de tache asycnhrone
 // Ex : class ServiceClientRelais extends AsyncTask
@@ -18,6 +20,8 @@ public class ApplicationConfig extends Application
 {
     private static ApplicationConfig instance;
     private String urlWebService = "";
+    private String urlWebServiceWifi = "";
+    private String urlWebServiceInternet = "";
     
     public static ApplicationConfig getConfig ()
     {
@@ -29,16 +33,40 @@ public class ApplicationConfig extends Application
         super.onCreate();
         instance = this;
     }
-    
+
     public String getUrlWebService ()
     {
-        return "http://192.168.1.3:18099/";
-        //return urlWebService;
+       return urlWebService;
+    }
+
+    public String getUrlWebServiceWifi ()
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String ip = sharedPreferences.getString("IP_Locale_Banane", "Error");
+        String port = sharedPreferences.getString("Port_Banane", "Error");
+
+        String url = "http://" + ip + ":" + port + "/";
+        return url;
+    }
+
+    public String getUrlWebServiceInternet ()
+    {
+        return urlWebServiceInternet;
     }
     
     public void setUrlWebService (String s)
     {
         this.urlWebService = s;
+    }
+
+    public void setUrlWebServiceWifi (String s)
+    {
+        this.urlWebServiceWifi = s;
+    }
+
+    public void setUrlWebServiceInternet (String s)
+    {
+        this.urlWebServiceInternet = s;
     }
     
 }
