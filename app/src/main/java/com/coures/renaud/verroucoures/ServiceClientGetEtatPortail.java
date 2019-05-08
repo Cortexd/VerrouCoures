@@ -1,10 +1,6 @@
 package com.coures.renaud.verroucoures;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.TextView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,63 +14,79 @@ import java.io.StringReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
-public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String> {
-
-
-    private static int ReadTimeout = 10000;
-    private static int ConnectTimeout = 10000;
-    private static String urlString = "http://192.168.1.3:18099/";
-    private static String namespace = "http://192.168.1.3:18099/";
-    private static String soapAction = namespace + "/";
-
+public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String>
+{
+    
+    
+    // Url du web service
+    // "http://192.168.1.3:18099/"
+    private String urlString;
+    
     // ***** Hold weak reference *****
     // Issue de https://stackoverflow.com/questions/12575068/how-to-get-the-result-of-onpostexecute-to-main-activity-because-asynctask-is-a
     private WeakReference<MyTaskInformer> mCallBack;
-
+    
     // contructeur
-    public ServiceClientGetEtatPortail(MyTaskInformer callback) {
+    public ServiceClientGetEtatPortail (MyTaskInformer callback)
+    {
         this.mCallBack = new WeakReference<>(callback);
+        
+        // A la création on recupere l'url du web service WIFI ou INTERNET
+        ApplicationConfig conf = ApplicationConfig.getConfig();
+        this.urlString = conf.getUrlWebService();
+        
     }
-
-
-    private static Document convertStringToDocument(String xmlStr) {
+    
+    private static Document convertStringToDocument (String xmlStr)
+    {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
-        try {
+        try
+        {
             builder = factory.newDocumentBuilder();
             Document doc = builder.parse(new InputSource(new StringReader(xmlStr)));
             return doc;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         return null;
     }
-
-    protected String getString(String tagName, Element element) {
+    
+    protected String getString (String tagName, Element element)
+    {
         NodeList list = element.getElementsByTagName(tagName);
-        if (list != null && list.getLength() > 0) {
+        if (list != null && list.getLength() > 0)
+        {
             NodeList subList = list.item(0).getChildNodes();
-
-            if (subList != null && subList.getLength() > 0) {
+            
+            if (subList != null && subList.getLength() > 0)
+            {
                 return subList.item(0).getNodeValue();
             }
         }
-
+        
         return null;
     }
-
-
+    
+    
     @Override
-    protected String doInBackground(Void... params) {
-        try {
-
+    protected String doInBackground (Void... params)
+    {
+        try
+        {
+            
+            
+            String soapAction = urlString + "/";
             String v1_cleSecurite = new CleSecure().getCleSecurite();
-
+            
             // Create soap message
             StringBuilder sb = new StringBuilder();
             sb.append("<SOAP-ENV:Envelope\n");
@@ -90,67 +102,76 @@ public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String> {
             sb.append("</getEtatPortail>\n");
             sb.append("</SOAP-ENV:Body>\n");
             sb.append("</SOAP-ENV:Envelope>\n");
-
+            
             String content = sb.toString();
-
+            
             // create post for soap message
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection(); // this needs to be HttpsURLConnection if you are using ssl
-            connection.setReadTimeout(ReadTimeout);
-            connection.setConnectTimeout(ConnectTimeout);
+            int Timeout = 10000;
+            connection.setReadTimeout(Timeout);
+            connection.setConnectTimeout(Timeout);
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "text/xml;charset=utf-8");
             connection.setRequestProperty("Content-Length", String.valueOf(content.length()));
             connection.setRequestProperty("SOAPAction", soapAction);
-
+            
             // Get soap response
             OutputStream os = connection.getOutputStream();
-            os.write(content.getBytes("UTF-8"));
+            os.write(content.getBytes(StandardCharsets.UTF_8));
             os.flush();
             os.close();
             String response = "";
             int responseCode = connection.getResponseCode();
             BufferedReader br;
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpURLConnection.HTTP_OK)
+            {
                 String line;
                 br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                while ((line = br.readLine()) != null) {
+                while ((line = br.readLine()) != null)
+                {
                     response += line;
                 }
-            } else {
+            }
+            else
+            {
                 throw new Exception("HTTP ERROR: " + responseCode);
             }
-
-
+            
+            
             Document xmlRetour = convertStringToDocument(response);
             Element rootElement = xmlRetour.getDocumentElement();
             String retour = getString("Result", rootElement);
-
-            retour = retour.replace("Portail2", "\r\n" +"Portail2" );
-          
+            
+            retour = retour.replace("Portail2", "\r\n" + "Portail2");
+            
             // release all resources
             br.close();
             connection.disconnect();
-
+            
             return retour;
-
-        } catch (Exception ex) {
+            
+        }
+        catch (Exception ex)
+        {
             return "Error " + ex.getMessage();
             //return false;
         }
     }
-
+    
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute (String s)
+    {
         super.onPostExecute(s);
         final MyTaskInformer callBack = mCallBack.get();
-
-        if(callBack != null) {
+        
+        if (callBack != null)
+        {
             callBack.onTaskDone(s);
         }
-
+        
     }
     // <?xml version="1.0" encoding="UTF-8"?>
     // <SOAP-ENV:Envelope
@@ -164,5 +185,5 @@ public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String> {
     // </getEtatPortailResponse>
     // </SOAP-ENV:Body>
     // </SOAP-ENV:Envelope>
-
+    
 }

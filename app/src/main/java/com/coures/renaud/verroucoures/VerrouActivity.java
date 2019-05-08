@@ -1,6 +1,8 @@
 package com.coures.renaud.verroucoures;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -9,14 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.Manifest;
 
 
 public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
 {
-    
     final MyTaskInformer callback = this;
     int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     
@@ -29,35 +31,48 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
         // Ajoute event
         this.attacheEvenementPortailBouton();
         this.attacheEvenementGetEtatPortailsBouton();
+        this.attacheEvenementPreferenceBouton();
+        this.attacheEvenementChangementIP();
         
         
-        //new ServiceClientGetEtatPortail(this).execute();
-    
-        WebView wv =  findViewById(R.id.webViewImage);
+        // Image
+        WebView wv = findViewById(R.id.webViewImage);
         String mStringUrl = "https://picsum.photos/150/200/?random";
-        wv.loadDataWithBaseURL(null, "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img src=\"" + mStringUrl + "\"></td></tr></table></body></html>", "html/css", "utf-8", null);
+        wv.loadDataWithBaseURL(null,
+                               "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img src=\"" + mStringUrl + "\"></td></tr></table></body></html>",
+                               "html/css", "utf-8", null);
         
     }
     
+    
+    // Test
     public void myClickHandlerTEST (View target)
     {
-        
         try
         {
             TextView tvEtatPortail = findViewById(R.id.textViewEtatPortails);
-            
-            new WifiMaisonDetector(this, getApplicationContext()).IsMaisonConnected();
-    
-            
             tvEtatPortail.setText("Get IP");
-            
-            checkPermissionsAndGetIp();
+            checkPermissionsAndGetInternetIp();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        
+    }
+    
+    // Affiche les préférences
+    private void attacheEvenementPreferenceBouton ()
+    {
+        Button btnPref = findViewById(R.id.buttonPreference);
+        btnPref.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View view)
+            {
+                startActivity(new Intent(VerrouActivity.this, SettingsActivity.class));
+            }
+            
+        });
         
     }
     
@@ -71,8 +86,9 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
             {
                 Toast.makeText(getApplicationContext(), "Portail exterieur",
                                Toast.LENGTH_SHORT).show();
+                
                 // Appel web service
-                new ServiceClientRelais().execute(new ParamRelays("IMP", 8));
+                new ServiceClientRelais().execute(new ServiceClientRelaisParam("IMP", 8));
                 return true;    // <- set to true
             }
         });
@@ -83,7 +99,8 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
             public boolean onLongClick (View arg0)
             {
                 Toast.makeText(getApplicationContext(), "Portail IONIC", Toast.LENGTH_SHORT).show();
-                new ServiceClientRelais().execute(new ParamRelays("IMP", 7));
+                
+                new ServiceClientRelais().execute(new ServiceClientRelaisParam("IMP", 7));
                 return true;    // <- set to true
             }
         });
@@ -93,17 +110,17 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
         {
             public boolean onLongClick (View arg0)
             {
+                
                 Toast.makeText(getApplicationContext(), "Portail MIEV", Toast.LENGTH_SHORT).show();
-                new ServiceClientRelais().execute(new ParamRelays("IMP", 6));
+                
+                new ServiceClientRelais().execute(new ServiceClientRelaisParam("IMP", 6));
                 return true;    // <- set to true
             }
         });
     }
     
-    
     private void attacheEvenementGetEtatPortailsBouton ()
     {
-        
         
         Button button = findViewById(R.id.buttonEtatPortail);
         button.setOnLongClickListener(new View.OnLongClickListener()
@@ -119,25 +136,48 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
         
     }
     
+    private void attacheEvenementChangementIP ()
+    {
+        Switch s = findViewById(R.id.switchWifi);
+        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked)
+                {
+                    Toast.makeText(getApplicationContext(), "Utilisation du wifi maison",
+                                   Toast.LENGTH_SHORT).show();
+                    
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Utilisation cnx internet",
+                                   Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    
     @Override
     public void onTaskDone (String output)
     {
-        
         TextView tvEtatPortail = findViewById(R.id.textViewEtatPortails);
         tvEtatPortail.setText(output);
     }
     
-    public void checkPermissionsAndGetIp()
+    public void checkPermissionsAndGetInternetIp ()
     {
         
         final String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    
+        
         if (ActivityCompat.checkSelfPermission(this,
                                                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                                                                    Manifest.permission.WRITE_EXTERNAL_STORAGE))
             {
-    
+                
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Permission Needed");
                 builder.setMessage("You must accept the permission.");
@@ -145,7 +185,8 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
                 {
                     public void onClick (DialogInterface dialog, int id)
                     {
-                        ActivityCompat.requestPermissions(VerrouActivity.this, permissions, MY_PERMISSIONS_REQUEST_READ_CONTACTS    );
+                        ActivityCompat.requestPermissions(VerrouActivity.this, permissions,
+                                                          MY_PERMISSIONS_REQUEST_READ_CONTACTS);
                     }
                 });
                 builder.setNegativeButton("Annulé", new DialogInterface.OnClickListener()
@@ -160,13 +201,14 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
             }
             else
             {
-                ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+                ActivityCompat.requestPermissions(this, permissions,
+                                                  MY_PERMISSIONS_REQUEST_READ_CONTACTS);
             }
         }
         else
         {
             new DropBoxInterface(this).execute();
         }
-    
+        
     }
 }

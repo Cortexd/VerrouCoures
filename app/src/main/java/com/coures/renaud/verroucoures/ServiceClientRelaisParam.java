@@ -1,13 +1,14 @@
 package com.coures.renaud.verroucoures;
 
-public class ParamRelays {
+public class ServiceClientRelaisParam
+{
 
 
     String action;
     int relays;
 
 
-    public ParamRelays(String imp, int i) {
+    public ServiceClientRelaisParam (String imp, int i) {
 
 
         this.action = imp;

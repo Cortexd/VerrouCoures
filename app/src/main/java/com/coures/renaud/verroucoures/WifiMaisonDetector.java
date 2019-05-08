@@ -2,43 +2,52 @@ package com.coures.renaud.verroucoures;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.preference.PreferenceManager;
 
-public  class WifiMaisonDetector
+class WifiMaisonDetector
 {
     private Activity activity;
     private Context context;
-    private RadioButton radioWifi;
     
-    public WifiMaisonDetector (Activity activity, Context context)
+    
+    WifiMaisonDetector (Activity activity, Context context)
     {
         this.activity = activity;
         this.context = context;
-        this.radioWifi = (RadioButton) this.activity.findViewById(R.id.radioButton);
-        IsMaisonConnected();
+        
     }
     
     
-    public void IsMaisonConnected()
+    public boolean IsMaisonConnected ()
     {
+        // Recup dans les préférences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(
+                this.context);
+        String SSID_MAISON = sharedPreferences.getString("SSID_Maison", "Error");
         
         String ssid = null;
-        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (networkInfo.isConnected()) {
-            final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        if (networkInfo.isConnected())
+        {
+            final WifiManager wifiManager = (WifiManager) context.getSystemService(
+                    Context.WIFI_SERVICE);
             final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
             if (connectionInfo != null && !connectionInfo.getSSID().isEmpty())
             {
-                ssid = connectionInfo.getSSID();
+                ssid = connectionInfo.getSSID().replace("\"", "");
+                return ssid.equals(SSID_MAISON);
             }
         }
-        radioWifi.setChecked(true);
+        
+        return false;
+        
     }
     
 }

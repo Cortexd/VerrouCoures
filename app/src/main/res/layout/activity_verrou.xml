@@ -51,8 +51,8 @@
 
     <Button
         android:id="@+id/buttonTEST"
-        android:layout_width="140dp"
-        android:layout_height="80dp"
+        android:layout_width="138dp"
+        android:layout_height="73dp"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="8dp"
         android:onClick="myClickHandlerTEST"
@@ -64,59 +64,61 @@
 
     <TextView
         android:id="@+id/textViewEtatPortails"
-        android:layout_width="340dp"
-        android:layout_height="122dp"
-        android:layout_marginBottom="36dp"
+        android:layout_width="335dp"
+        android:layout_height="159dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/colorGray"
         android:fontFamily="monospace"
         android:text="Etats portails : "
         android:textAppearance="@style/TextAppearance.AppCompat"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintEnd_toEndOf="@+id/buttonPreference"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/webViewImage"
+        app:layout_constraintTop_toBottomOf="@+id/webViewImage" />
 
     <WebView
         android:id="@+id/webViewImage"
-        android:layout_width="202dp"
-        android:layout_height="171dp"
+        android:layout_width="151dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEtatPortail" />
+
+    <Switch
+        android:id="@+id/switchWifi"
+        android:layout_width="110dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/buttonTEST"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="@+id/buttonTEST"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTEST" />
+
+    <Button
+        android:id="@+id/buttonPreference"
+        android:layout_width="138dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorGray"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Préférences"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/textViewEtatPortails"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.145"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEtatPortail"
-        app:layout_constraintVertical_bias="0.416" />
-
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="133dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="332dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="false"
-        android:text="Wifi détecté"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTEST" />
-
-    <Switch
-        android:id="@+id/switch3G"
-        android:layout_width="133dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:text="3G"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/radioButton"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+        app:layout_constraintHorizontal_bias="0.777"
+        app:layout_constraintStart_toEndOf="@+id/webViewImage"
+        app:layout_constraintTop_toBottomOf="@+id/switch3G"
+        app:layout_constraintVertical_bias="0.032" />
 
 </android.support.constraint.ConstraintLayout>
