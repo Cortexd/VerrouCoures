@@ -1,10 +1,11 @@
 package com.coures.renaud.verroucoures;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.widget.TextView;
-
+import android.preference.PreferenceManager;
 
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -20,21 +21,26 @@ import java.io.OutputStream;
 public class DropBoxInterface extends AsyncTask<Void, Void, String>
 {
     
-    private static String ACCESS_TOKEN = "bgrX91k7tyoAAAAAAAALM5tHDYKhpYoLGoLF_rouZ9HmSRi_oWsTLLV5eYvPaZrL";
+    private String accessTokenDropBox;
     private Activity activity;
+    private Context myCtx;
     private Exception mException;
-    TextView tvEtatPortail;
+    //TextView tvEtatPortail;
     
-    public DropBoxInterface (Activity activity)
+    public DropBoxInterface (Activity activity, Context myCtx)
     {
         this.activity = activity;
+        this.myCtx = myCtx;
+    
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.myCtx.getApplicationContext());
+        this.accessTokenDropBox = sharedPreferences.getString("accessTokenDropBox", "");
     }
     
     @Override
     protected void onPreExecute ()
     {
         super.onPreExecute();
-        tvEtatPortail = (TextView) activity.findViewById(R.id.textViewEtatPortails);
+        //tvEtatPortail = (TextView) activity.findViewById(R.id.textViewEtatPortails);
     }
     
     @Override
@@ -45,7 +51,7 @@ public class DropBoxInterface extends AsyncTask<Void, Void, String>
         {
             // Create Dropbox client
             DbxRequestConfig config = new DbxRequestConfig("dropbox/java-tutorial", "en_US");
-            DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
+            DbxClientV2 client = new DbxClientV2(config, accessTokenDropBox);
             
             File path = Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOWNLOADS);
@@ -81,22 +87,24 @@ public class DropBoxInterface extends AsyncTask<Void, Void, String>
             {
                 //Read text from file
                 StringBuilder text = new StringBuilder();
-    
-                try {
+                
+                try
+                {
                     BufferedReader br = new BufferedReader(new FileReader(file));
                     String line;
-        
-                    while ((line = br.readLine()) != null) {
+                    
+                    while ((line = br.readLine()) != null)
+                    {
                         text.append(line);
-                        text.append('\n');
+                        //text.append('\n');
                     }
                     br.close();
                 }
-                catch (IOException e) {
+                catch (IOException e)
+                {
                     //You'll need to add proper error handling here
                 }
-                ApplicationConfig conf = ApplicationConfig.getConfig();
-                conf.setUrlWebServiceInternet(text.toString());
+               
                 return text.toString();
             }
             
@@ -109,14 +117,20 @@ public class DropBoxInterface extends AsyncTask<Void, Void, String>
         return "test rien";
     }
     
-   
     
     @Override
     protected void onPostExecute (String result)
     {
         
-        tvEtatPortail.setText("ip " + result);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(
+                this.myCtx.getApplicationContext());
+        String port = sharedPreferences.getString("Port_Banane", "Error");
         
+        String url = "http://" + result + ":" + port + "/";
+        
+        // maj des parametres partagées
+        ApplicationConfig conf = ApplicationConfig.getConfig();
+        conf.setUrlWebServiceInternet(url);
         
     }
     
