@@ -3,8 +3,10 @@ package com.coures.renaud.verroucoures;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -64,17 +66,24 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
         }
         else
         {
-            textViewTypeCnx.setText("Internet");
-            ApplicationConfig conf = ApplicationConfig.getConfig();
-            conf.setUrlWebService(conf.getUrlWebServiceInternet());
-            Toast.makeText(getApplicationContext(),
-                           "Utilisation cnx internet " + conf.getUrlWebService(),
-                           Toast.LENGTH_SHORT).show();
-        }
-        
-        
-    }
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            Boolean onlyHouseMode = sharedPreferences.getBoolean("onlyHouseMode", true);
     
+            if (!onlyHouseMode)
+            {
+                textViewTypeCnx.setText("Internet");
+                ApplicationConfig conf = ApplicationConfig.getConfig();
+                conf.setUrlWebService(conf.getUrlWebServiceInternet());
+                Toast.makeText(getApplicationContext(),
+                               "Utilisation cnx internet " + conf.getUrlWebService(),
+                               Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Utilisation bloqué pour la maison uniquement ", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     
     private void chargeWebView ()
     {
@@ -151,7 +160,7 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
                 Toast.makeText(getApplicationContext(), "Portail exterieur", Toast.LENGTH_SHORT).show();
                 
                 // Appel web service
-                new ServiceClientRelais().execute(new ServiceClientRelaisParam("IMP", 8));
+                new ServiceClientRelais(getApplicationContext()).execute(new ServiceClientRelaisParam("IMP", 8));
                 return true;    // <- set to true
             }
         });
@@ -162,8 +171,8 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
             public boolean onLongClick (View arg0)
             {
                 Toast.makeText(getApplicationContext(), "Portail IONIC", Toast.LENGTH_SHORT).show();
-                
-                new ServiceClientRelais().execute(new ServiceClientRelaisParam("IMP", 7));
+    
+                new ServiceClientRelais(getApplicationContext()).execute(new ServiceClientRelaisParam("IMP", 7));
                 return true;    // <- set to true
             }
         });
@@ -175,8 +184,8 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
             {
                 
                 Toast.makeText(getApplicationContext(), "Portail MIEV", Toast.LENGTH_SHORT).show();
-                
-                new ServiceClientRelais().execute(new ServiceClientRelaisParam("IMP", 6));
+    
+                new ServiceClientRelais(getApplicationContext()).execute(new ServiceClientRelaisParam("IMP", 6));
                 return true;    // <- set to true
             }
         });
@@ -192,7 +201,7 @@ public class VerrouActivity extends AppCompatActivity implements MyTaskInformer
             {
                 
                 Toast.makeText(getApplicationContext(), "Recup état", Toast.LENGTH_SHORT).show();
-                new ServiceClientGetEtatPortail(callback).execute();
+                new ServiceClientGetEtatPortail(callback, getApplicationContext()).execute();
                 return true;    // <- set to true
             }
         });

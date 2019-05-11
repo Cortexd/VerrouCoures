@@ -1,5 +1,6 @@
 package com.coures.renaud.verroucoures;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -7,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 
 public class ServiceClientRelais extends AsyncTask<ServiceClientRelaisParam, Void, Boolean>
@@ -14,14 +16,16 @@ public class ServiceClientRelais extends AsyncTask<ServiceClientRelaisParam, Voi
     
     // Url du web service
     private String urlString;
+    private Context context;
     
     // contructeur
-    public ServiceClientRelais ()
+    public ServiceClientRelais (Context context)
     {
         
         // A la création on recupere l'url du web service WIFI ou INTERNET
         ApplicationConfig conf = ApplicationConfig.getConfig();
         this.urlString = conf.getUrlWebService();
+        this.context = context;
     }
     
     @Override
@@ -30,8 +34,8 @@ public class ServiceClientRelais extends AsyncTask<ServiceClientRelaisParam, Voi
         try
         {
             String soapAction = urlString + "/";
-            
-            String v1_cleSecurite = new CleSecure().getCleSecurite();
+    
+            String v1_cleSecurite = new CleSecure().getCleSecurite(this.context);
             String v2_action = serviceClientRelaisParamRelays[0].action;
             String v3_relais = Integer.toString(serviceClientRelaisParamRelays[0].relays);
             
@@ -70,7 +74,7 @@ public class ServiceClientRelais extends AsyncTask<ServiceClientRelaisParam, Voi
             
             // Get soap response
             OutputStream os = connection.getOutputStream();
-            os.write(content.getBytes("UTF-8"));
+            os.write(content.getBytes(StandardCharsets.UTF_8));
             os.flush();
             os.close();
             String response = "";

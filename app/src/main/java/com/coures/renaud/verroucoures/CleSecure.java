@@ -1,5 +1,9 @@
 package com.coures.renaud.verroucoures;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -7,10 +11,14 @@ import java.util.GregorianCalendar;
 public class CleSecure {
 
     //https://stackoverflow.com/questions/45406996/how-to-encrypt-string-in-java-and-decrypt-in-python
-
-    public String getCleSecurite()
+    
+    public String getCleSecurite (Context context)
     {
-        String  ENCRYPTION_KEY = "09061979AaronAxel";
+    
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        String ENCRYPTION_KEY = sharedPreferences.getString("keyWebService", "Error");
+    
+        //= "09061979AaronAxel";
 
         String  plaintext = getCurrentTimeStamp() + ENCRYPTION_KEY;
         String encrypted = new Encryption().get_SHA_512_SecurePassword(plaintext, "");

@@ -1,5 +1,6 @@
 package com.coures.renaud.verroucoures;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.w3c.dom.Document;
@@ -31,11 +32,13 @@ public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String>
     // ***** Hold weak reference *****
     // Issue de https://stackoverflow.com/questions/12575068/how-to-get-the-result-of-onpostexecute-to-main-activity-because-asynctask-is-a
     private WeakReference<MyTaskInformer> mCallBack;
+    private Context context;
     
     // contructeur
-    public ServiceClientGetEtatPortail (MyTaskInformer callback)
+    public ServiceClientGetEtatPortail (MyTaskInformer callback, Context context)
     {
         this.mCallBack = new WeakReference<>(callback);
+        this.context = context;
         
         // A la création on recupere l'url du web service WIFI ou INTERNET
         ApplicationConfig conf = ApplicationConfig.getConfig();
@@ -85,7 +88,7 @@ public class ServiceClientGetEtatPortail extends AsyncTask<Void, Void, String>
             
             
             String soapAction = urlString + "/";
-            String v1_cleSecurite = new CleSecure().getCleSecurite();
+            String v1_cleSecurite = new CleSecure().getCleSecurite(this.context);
             
             // Create soap message
             StringBuilder sb = new StringBuilder();
