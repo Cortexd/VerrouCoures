@@ -2,18 +2,22 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VerrouActivity"
-    android:id="@+id/relativeLayout">
+    tools:context=".VerrouActivity">
 
     <Button
         android:id="@+id/buttonExterieur"
-        android:layout_width="355dp"
-        android:layout_height="71dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="340dp"
+        android:layout_height="63dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         android:text="Exterieur"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,8 +25,7 @@
         android:id="@+id/buttonMiev"
         android:layout_width="138dp"
         android:layout_height="73dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="Miev"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonExterieur" />
@@ -36,73 +39,59 @@
         android:text="Ionic"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonMiev"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/buttonMiev" />
 
     <Button
         android:id="@+id/buttonEtatPortail"
         android:layout_width="138dp"
         android:layout_height="73dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="8dp"
         android:text="Etat portails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonMiev" />
 
     <Button
         android:id="@+id/buttonTEST"
-        android:layout_width="138dp"
-        android:layout_height="73dp"
+        android:layout_width="133dp"
+        android:layout_height="75dp"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="8dp"
         android:onClick="myClickHandlerTEST"
         android:text="TEST"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonEtatPortail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.294"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/buttonEtatPortail" />
 
     <TextView
         android:id="@+id/textViewEtatPortails"
-        android:layout_width="335dp"
-        android:layout_height="159dp"
+        android:layout_width="339dp"
+        android:layout_height="226dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorGray"
         android:fontFamily="monospace"
         android:text="Etats portails : "
         android:textAppearance="@style/TextAppearance.AppCompat"
-        app:layout_constraintEnd_toEndOf="@+id/buttonPreference"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/webViewImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.133"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/webViewImage" />
 
     <WebView
         android:id="@+id/webViewImage"
-        android:layout_width="151dp"
-        android:layout_height="145dp"
+        android:layout_width="123dp"
+        android:layout_height="104dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorGray"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonEtatPortail" />
-
-    <Switch
-        android:id="@+id/switchWifi"
-        android:layout_width="110dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:text="Internet"
-        app:layout_constraintEnd_toEndOf="@+id/buttonTEST"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="@+id/buttonTEST"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTEST" />
 
     <Button
         android:id="@+id/buttonPreference"
@@ -111,15 +100,33 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="Préférences"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/textViewEtatPortails"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.777"
+        app:layout_constraintHorizontal_bias="0.598"
         app:layout_constraintStart_toEndOf="@+id/webViewImage"
-        app:layout_constraintTop_toBottomOf="@+id/switch3G"
-        app:layout_constraintVertical_bias="0.032" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTypeConnexion" />
+
+    <Button
+        android:id="@+id/buttonRefreshConnexion"
+        android:layout_width="52dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="12dp"
+        android:text="Maj"
+        android:textSize="8sp"
+        app:layout_constraintStart_toEndOf="@+id/webViewImage"
+        app:layout_constraintTop_toTopOf="@+id/webViewImage" />
+
+    <TextView
+        android:id="@+id/textViewTypeConnexion"
+        android:layout_width="66dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/buttonRefreshConnexion"
+        app:layout_constraintTop_toTopOf="@+id/webViewImage" />
 
 </android.support.constraint.ConstraintLayout>
